@@ -38,24 +38,83 @@ function onSearchChange(e) {
   const query = e.target.value;
 
   // Filter the list
-  const filteredItems = allItems.filter(item => item.name.includes(query));
+  const filteredItems = allItems.filter(
+    item => item.name.substr(0, query.length) === query,
+  );
 
-  // TODO: how to re-use the dom elements instead of creating new ones
+  // Re-render with only the items that match
   renderItems(filteredItems);
 }
 
-// Starts the app
+// Start the app
 document.addEventListener('DOMContentLoaded', () => {
   init();
 });
 
 // Helpers
+
+const Benchmark = require('benchmark');
+
+var suite = new Benchmark.Suite();
+
+function runSuite() {
+  suite
+    .add('appendChild in a loop', function() {
+      $ul.innerHTML = '';
+      const elts = allItems.forEach(item => {
+        const el = elt('li', item.name);
+        $ul.appendChild(el);
+      });
+    })
+    .add('outerHTML', function() {
+      $ul.innerHTML = '';
+      const arr = [];
+      const elts = allItems.forEach(item => {
+        const el = elt('li', item.name);
+        arr.push(el);
+      });
+      $ul.innerHTML = arr.map(el => el.outerHTML).join('');
+    })
+    .add('documentFragments', function() {
+      $ul.innerHTML = '';
+
+      const documentFragment = document.createDocumentFragment();
+
+      const elts = allItems.forEach(item => {
+        const li = elt('li', item.name);
+        documentFragment.appendChild(li);
+      });
+
+      $ul.appendChild(documentFragment);
+    })
+    .on('cycle', function(event) {
+      console.log(String(event.target));
+    })
+    .on('complete', function() {
+      console.log('Fastest is ' + this.filter('fastest').map('name'));
+    })
+    .run({ async: true });
+}
+
 function renderItems(items) {
+  // $ul.innerHTML = '';
+  // const arr = [];
+  // const elts = items.forEach(item => {
+  //   const el = elt('li', item.name);
+  //   arr.push(el);
+  //   $ul.appendChild(el);
+  // });
+  // arr.map(elt => elt.outerHTML).join('');
   $ul.innerHTML = '';
-  items.forEach(item => {
-    const el = elt('li', item.name);
-    $ul.appendChild(el);
+
+  const documentFragment = document.createDocumentFragment();
+
+  const elts = allItems.forEach(item => {
+    const li = elt('li', item.name);
+    documentFragment.appendChild(li);
   });
+
+  $ul.appendChild(documentFragment);
 }
 
 function elt(eltType, text, options = {}) {
