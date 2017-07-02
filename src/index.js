@@ -37,15 +37,20 @@ function onSearchChange(e) {
   // Get the search query we should filter by
   const query = e.target.value;
 
-  // Filter the list
-  const filteredItems = allItems.filter(
-    item =>
-      item.name.substr(0, query.length).toLocaleLowerCase() ===
-      query.toLowerCase(),
-  );
+  const $lis = document.querySelectorAll('.item');
 
-  // Re-render with only the items that match
-  renderItems(filteredItems);
+  // Filter the list
+  Array.from($lis).forEach(li => {
+    const value = li.querySelector('h3').textContent;
+    if (
+      value &&
+      value.substr(0, query.length).toLowerCase() === query.toLowerCase()
+    ) {
+      li.style.display = '';
+    } else {
+      li.style.display = 'none';
+    }
+  });
 }
 
 // Start the app
@@ -67,7 +72,11 @@ function renderItems(items) {
   const documentFragment = document.createDocumentFragment();
 
   items.forEach(item => {
-    const li = elt('li', item.name);
+    const li = elt('li', '', { class: 'item' });
+    const header = elt('h3', item.name, { 'data-text': item.name });
+    const body = elt('div', `Rating: ${item.rating}`);
+    li.appendChild(header);
+    li.appendChild(body);
     documentFragment.appendChild(li);
   });
 

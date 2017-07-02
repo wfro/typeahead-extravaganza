@@ -2,43 +2,53 @@
   "items": [
     {
       "id": 1,
-      "name": "Apple"
+      "name": "Apple",
+      "rating": 5
     },
     {
       "id": 2,
-      "name": "Avacado"
+      "name": "Avacado",
+      "rating": 2
     },
     {
       "id": 3,
-      "name": "Banana"
+      "name": "Banana",
+      "rating": 3
     },
     {
       "id": 4,
-      "name": "Cheerios"
+      "name": "Cheerios",
+      "rating": 2
     },
     {
       "id": 5,
-      "name": "Cheese"
+      "name": "Cheese",
+      "rating": 4
     },
     {
       "id": 6,
-      "name": "Doritos"
+      "name": "Doritos",
+      "rating": 2
     },
     {
       "id": 7,
-      "name": "Dragonfruit"
+      "name": "Dragonfruit",
+      "rating": 3
     },
     {
       "id": 8,
-      "name": "Eggs"
+      "name": "Eggs",
+      "rating": 4
     },
     {
       "id": 9,
-      "name": "Eggplant"
+      "name": "Eggplant",
+      "rating": 3
     },
     {
       "id": 10,
-      "name": "Cashmiri"
+      "name": "Kashmiri Saffron",
+      "rating": 4
     }
   ]
 }
