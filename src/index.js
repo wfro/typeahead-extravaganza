@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import './index.css';
+// import App from './App';
+// import registerServiceWorker from './registerServiceWorker';
+//
 // ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();
 
 // const $root = document.getElementById('root');
 
@@ -39,7 +39,9 @@ function onSearchChange(e) {
 
   // Filter the list
   const filteredItems = allItems.filter(
-    item => item.name.substr(0, query.length) === query,
+    item =>
+      item.name.substr(0, query.length).toLocaleLowerCase() ===
+      query.toLowerCase(),
   );
 
   // Re-render with only the items that match
@@ -53,63 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Helpers
 
-const Benchmark = require('benchmark');
-
-var suite = new Benchmark.Suite();
-
-function runSuite() {
-  suite
-    .add('appendChild in a loop', function() {
-      $ul.innerHTML = '';
-      const elts = allItems.forEach(item => {
-        const el = elt('li', item.name);
-        $ul.appendChild(el);
-      });
-    })
-    .add('outerHTML', function() {
-      $ul.innerHTML = '';
-      const arr = [];
-      const elts = allItems.forEach(item => {
-        const el = elt('li', item.name);
-        arr.push(el);
-      });
-      $ul.innerHTML = arr.map(el => el.outerHTML).join('');
-    })
-    .add('documentFragments', function() {
-      $ul.innerHTML = '';
-
-      const documentFragment = document.createDocumentFragment();
-
-      const elts = allItems.forEach(item => {
-        const li = elt('li', item.name);
-        documentFragment.appendChild(li);
-      });
-
-      $ul.appendChild(documentFragment);
-    })
-    .on('cycle', function(event) {
-      console.log(String(event.target));
-    })
-    .on('complete', function() {
-      console.log('Fastest is ' + this.filter('fastest').map('name'));
-    })
-    .run({ async: true });
-}
-
 function renderItems(items) {
-  // $ul.innerHTML = '';
-  // const arr = [];
-  // const elts = items.forEach(item => {
-  //   const el = elt('li', item.name);
-  //   arr.push(el);
-  //   $ul.appendChild(el);
-  // });
-  // arr.map(elt => elt.outerHTML).join('');
+  // Clear out the old list before we re-render
   $ul.innerHTML = '';
 
+  // Interacting with the DOM (usually by selecting/removing/appending
+  // an element) is expensive, so we ideally want to minimize how
+  // much we interact directly with the DOM. Using a document fragment
+  // ensures we only have to paint once, when the final list of elements
+  // has been built up.
   const documentFragment = document.createDocumentFragment();
 
-  const elts = allItems.forEach(item => {
+  items.forEach(item => {
     const li = elt('li', item.name);
     documentFragment.appendChild(li);
   });
