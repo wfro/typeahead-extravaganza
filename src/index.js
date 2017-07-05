@@ -15,17 +15,6 @@ let allItems = [];
 
 function init() {
   initialRender();
-
-  // Fetch the initial list of tasks
-  window
-    .fetch('http://localhost:3001/items')
-    .then(resp => resp.json())
-    .then(resp => {
-      allItems = resp;
-
-      // Finally to the initial render of the items list
-      renderItems(allItems);
-    });
 }
 
 function initialRender() {
@@ -50,25 +39,29 @@ function initialRender() {
   $root.appendChild($container);
 }
 
-// Runs every time a user types something new into the search input
 function onSearchChange(e) {
   // Get the search query we should filter by
   const query = e.target.value;
 
-  const $lis = document.querySelectorAll('.item');
+  // Don't make a request without a search term
+  if (!query.length) {
+    const $searchResults = document.querySelector('.search-results');
+    $searchResults.innerHTML = '';
 
-  // Filter the list
-  Array.from($lis).forEach(li => {
-    const value = li.querySelector('h3').textContent;
-    if (
-      value &&
-      value.substr(0, query.length).toLowerCase() === query.toLowerCase()
-    ) {
-      li.style.display = '';
-    } else {
-      li.style.display = 'none';
-    }
-  });
+    return;
+  }
+
+  // Add a loading indicator while the request is in progress
+  const $searchResults = document.querySelector('.search-results');
+  // Clear out the old list before we re-render
+  $searchResults.innerHTML = 'Loading...';
+
+  window
+    .fetch(`http://localhost:3001/items?name_like=${query}`)
+    .then(resp => resp.json())
+    .then(resp => {
+      renderItems(resp);
+    });
 }
 
 // Start the app
@@ -84,6 +77,10 @@ function renderItems(items) {
 
   // Clear out the old list before we re-render
   $searchResults.innerHTML = '';
+
+  if (!items.length) {
+    $searchResults.innerHTML = 'No results!';
+  }
 
   // Interacting with the DOM (usually by selecting/removing/appending
   // an element) is expensive, so we ideally want to minimize how
