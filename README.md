@@ -43,7 +43,7 @@ npm install
 
 Start the development server:
 ```
-npm stsrt
+npm start
 # or
 # yarn start
 ```
