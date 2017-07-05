@@ -216,11 +216,11 @@ function onSearchChange(e) {
   * Lots of manual DOM interaction, ugh
   * Hard to know what the page will look like in any given state
 
-### React
+## React
 
 OK, here's where the "crash course" bit comes in:
 
-#### What is react?
+### What is react?
 
 A UI library built by Facebook. It's key features:
 - component driven. Create components like <Button />, <Navbar />, <ItemCard />, and combine/reuse them however you want. Component driven design is awesome and has totally stuck.
@@ -230,7 +230,7 @@ A UI library built by Facebook. It's key features:
 - state management, specifically setState and top-down rendering.
 - virtual DOM
 
-#### What do I need to know to use it?
+### What do I need to know to use it?
 
 - Creating and combining components
 - JSX
