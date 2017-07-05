@@ -395,6 +395,6 @@ For bonus points, lets refactor `render` and add an empty state.
 ...
 ```
 
-< End checkpoint 3
+> End checkpoint 3
 
 
