@@ -42,6 +42,29 @@ class App extends Component {
       });
   }
 
+  isEmpty() {
+    return !this.state.items.length;
+  }
+
+  renderResults() {
+    if (this.isEmpty()) {
+      if (this.state.isLoading) {
+        return <div>Loading...</div>;
+      }
+
+      return <div>No results!</div>;
+    }
+
+    // Using brackets are how we switch between JSX and normal JS
+    // Every jsx element rendered in a loop needs a unique `key` property
+    return this.state.items.map(item => (
+      <li className="item" key={item.id}>
+        <h3>{item.name}</h3>
+        <div>Rating: {item.rating}</div>
+      </li>
+    ));
+  }
+
   // Every component must have a `render` method, which returns either a
   // string or a valid virtual DOM structure
   render() {
@@ -56,14 +79,7 @@ class App extends Component {
           onChange={this.onSearchChange}
         />
         <ul className="search-results">
-          {/* USing brackets are how we switch between JSX and normal JS */}
-          {/* Every jsx element rendered in a loop needs a unique `key` property */}
-          {this.state.items.map(item => (
-            <li className="item" key={item.id}>
-              <h3>{item.name}</h3>
-              <div>Rating: {item.rating}</div>
-            </li>
-          ))}
+          {this.renderResults()}
         </ul>
       </div>
     );
