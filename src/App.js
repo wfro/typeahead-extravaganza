@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+// Newer versions of React prefer ES6 classes to create new React components
 class App extends Component {
+  // Every component must have a `render` method, which returns either a
+  // string or a valid virtual DOM structure
   render() {
+    // This is JSX. The syntax is very close to HTML itself, with a few key differences
+    // like `class` becoming `className`.
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="search-container">
+        <input className="search-input" type="text" placeholder="Search..." />
+        <ul className="search-results" />
       </div>
     );
   }
