@@ -3,3 +3,45 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.search-container {
+  max-width: 660px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: none;
+  height: 36px;
+  padding: 0 10px;
+  margin-bottom: 0px;
+  background-position: left 14px center;
+  background-color: #f7f7f7;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 22px;
+  color: #393939;
+}
+
+.search-results {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(89, 217, 109, 0.09);
+  border: 1px solid rgba(89, 217, 109, 1);
+  border-top: none;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: rgba(89, 217, 109, 0.3);
+}
