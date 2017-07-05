@@ -48,8 +48,11 @@ npm start
 # yarn start
 ```
 
-Start the REST API
+Install and Start the REST API
 ```
+yarn global add json-server
+# or
+# npm install -g json-server
 json-server db.json -p 3001
 ```
 
@@ -135,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 });
 ```
-> End checkpoint 1
+> End checkpoint 1 (`git checkout 39770d4`)
 
 And hook up the search handler:
 ```js
@@ -208,7 +211,7 @@ function onSearchChange(e) {
 }
 ```
 
-> End checkpoint 2
+> End checkpoint 2 (`git checkout 0f89c36`)
 
 * What is our state?
 * When does it change?
@@ -265,7 +268,7 @@ class App extends Component {
 
 export default App;
 ```
-> End checkpoint 1
+> End checkpoint 1 (`git checkout  6def9a3`)
 
 Next we can set up the event listener for the search input, and render the search results.
 
@@ -344,7 +347,7 @@ class App extends Component {
 
 export default App;
 ```
-> End checkpoint 2
+> End checkpoint 2 (`git checkout 9591550`)
 
 For bonus points, lets refactor `render` and add an empty state.
 
