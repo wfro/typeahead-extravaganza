@@ -83,6 +83,12 @@ We technically have a bootstrapped React application, but the first thing we'll 
 
 Let's start with the markup first, and then we can fill in each of the dynamic pieces.
 
+First, checkout a new branch:
+
+```
+git checkout -b plain-js-take-one
+```
+
 Because we're rendering everything client-side, we'll need to make a whole bunch of HTML elements. Start with a helper function to make the rest of the process a little bit more pleasant:
 
 ```js
@@ -240,6 +246,12 @@ A UI library built by Facebook. It's key features:
 - props and state
 - setState
 - creating event listeners
+
+Start a new branch based off of master:
+```
+git checkout master
+git checkout -b react-take-one
+```
 
 Similar to the last go-round, let's start with a static version. Modify `src/App.js` to look like the following:
 ```js
