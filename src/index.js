@@ -2,23 +2,19 @@
 // import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
-// import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 //
 // ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
 
-// const $root = document.getElementById('root');
-
-const $ul = document.querySelector('.items');
-const $searchInput = document.querySelector('.search-input');
+const $root = document.getElementById('root');
 
 // Global variable that will hold items when they're fetched
 // from the server
 let allItems = [];
 
 function init() {
-  // Add the event listener
-  $searchInput.addEventListener('keyup', onSearchChange);
+  initialRender();
 
   // Fetch the initial list of tasks
   window
@@ -30,6 +26,28 @@ function init() {
       // Finally to the initial render of the items list
       renderItems(allItems);
     });
+}
+
+function initialRender() {
+  // Render the container
+  const $container = elt('div', '', { class: 'search-container' });
+
+  // Render the search input
+  const $input = elt('input', '', {
+    class: 'search-input',
+    type: 'text',
+    placeholder: 'Search...',
+  });
+  $input.addEventListener('keyup', onSearchChange);
+
+  // Render results container
+  const $resultsContainer = elt('ul', '', { class: 'search-results' });
+
+  $container.appendChild($input);
+  $container.appendChild($resultsContainer);
+
+  // Finally render everything to the page
+  $root.appendChild($container);
 }
 
 // Runs every time a user types something new into the search input
@@ -61,8 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // Helpers
 
 function renderItems(items) {
+  // Get the DOM node
+  const $searchResults = document.querySelector('.search-results');
+
   // Clear out the old list before we re-render
-  $ul.innerHTML = '';
+  $searchResults.innerHTML = '';
 
   // Interacting with the DOM (usually by selecting/removing/appending
   // an element) is expensive, so we ideally want to minimize how
@@ -71,6 +92,7 @@ function renderItems(items) {
   // has been built up.
   const documentFragment = document.createDocumentFragment();
 
+  // Create a new DOM node for each item
   items.forEach(item => {
     const li = elt('li', '', { class: 'item' });
     const header = elt('h3', item.name, { 'data-text': item.name });
@@ -80,7 +102,7 @@ function renderItems(items) {
     documentFragment.appendChild(li);
   });
 
-  $ul.appendChild(documentFragment);
+  $searchResults.appendChild(documentFragment);
 }
 
 function elt(eltType, text, options = {}) {
